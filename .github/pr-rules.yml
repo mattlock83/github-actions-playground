@@ -1,0 +1,16 @@
+version: 2
+mergeable:  
+  - when: pull_request.*, pull_request_review.*
+    validate:
+      - do: label
+        must_include:
+          regex: 'feature|bug'
+          message: 'PRs must have a feature or bug label'
+      - do: milestone
+        no_empty:
+          enabled: true
+          message: 'PRs must be associated to a milestone'
+    fail:
+      - do: results_as_review
+    pass:
+      - do: results_as_review

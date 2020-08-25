@@ -1,0 +1,19 @@
+name: Issue Rules
+
+on: 
+  issues:
+    types: [opened, edited, reopened, labeled, unlabeled, milestoned, demilestoned]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  check-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check Issues
+        uses: mattlock83/mergeable-github-action@v3.0
+        with:
+          config_file: 'issue-rules.yml'

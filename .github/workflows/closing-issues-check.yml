@@ -1,0 +1,19 @@
+name: Closing Issue Rules
+
+on: 
+  issues:
+    types: [closed]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  closing-issues-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check Issues
+        uses: mattlock83/mergeable-github-action@v3.0
+        with:
+          config_file: 'closing-issue-rules.yml'

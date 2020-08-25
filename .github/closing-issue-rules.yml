@@ -1,0 +1,27 @@
+version: 2
+mergeable:
+  - when: issues.*
+    validate:
+      - do: label
+        must_include:
+          regex: 'done|wontfix'
+          message: 'Issues must be labelled with an outcome on closing'
+      - do: and
+        validate:
+          - do: milestone
+            no_empty:
+              enabled: true
+              message: 'Issues that have been done must be associated to a milestone'
+          - do: label
+            must_include:
+              regex: 'done'
+              message: 'Issues that have been done must be associated to a milestone'
+    fail:
+      - do: labels
+        labels: [ 'missing meta data' ]
+      - do: comment
+        payload:
+          body: >
+            When closing issues
+              - An outcome label of done or wontfix must be be added
+              - If done, a milestone must be associated indicating the release

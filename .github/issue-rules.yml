@@ -1,0 +1,34 @@
+version: 2
+mergeable:
+  - when: issues.*
+    validate:
+      - do: or
+        validate:
+          - do: label
+            must_include:
+              regex: 'story|tech'
+              message: 'Issues must be labelled with type of story, bug, tech'
+          - do: and
+            validate:
+              - do: milestone
+                no_empty:
+                  enabled: true
+                  message: 'Bugs must be associated to a milestone to indicate the release they were found in'
+              - do: label
+                and:
+                  - must_include:
+                      regex: 'bug'
+                      message: 'Needs change type label'
+                  - must_include:
+                      regex: 'p1|p2|p3|p4|p5'
+                      message: 'Bugs must have a priority rating of p1, p2, p3, p4, p5'
+    fail:
+      - do: labels
+        labels: [ 'missing meta data' ]
+      - do: comment
+        payload:
+          body: >
+            Issues must have the following 
+              - A type label of story, bug or tech
+              - A prirority label of p1,p2,p3,p4 or p5 if type is bug
+              - A milestone representing the affected release if type is bug

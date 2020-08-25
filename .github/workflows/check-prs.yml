@@ -1,0 +1,20 @@
+name: PR Rules
+
+on: 
+  pull_request:
+    types: 
+      - '**'
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  check-prs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check PRs
+        uses: mattlock83/mergeable-github-action@v3.0
+        with:
+          config_file: 'pr-rules.yml'
