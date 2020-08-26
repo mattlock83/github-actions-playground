@@ -2,8 +2,7 @@ name: PR Rules
 
 on: 
   pull_request:
-    types: 
-      - '**'
+    types: [labeled, unlabeled, opened, edited, reopened, synchronize]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
