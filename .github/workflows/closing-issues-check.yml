@@ -14,6 +14,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Check Issues
-        uses: mattlock83/mergeable-github-action@v3.0.1
+        uses: mattlock83/mergeable-github-action@v4.0
         with:
           config_file: 'closing-issue-rules.yml'
